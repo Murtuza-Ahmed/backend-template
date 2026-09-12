@@ -1,0 +1,54 @@
+{
+  "name": "backend-template",
+  "version": "1.0.0",
+  "description": "Scalable and production-ready Node.js backend starter template for building secure REST APIs.",
+  "main": "index.js",
+  "author": {
+    "name": "Murtuza Ahmed",
+    "url": "https://github.com/Murtuza-Ahmed"
+  },
+  "license": "ISC",
+  "scripts": {
+    "test": "nyc mocha --timeout=60000 --exit",
+    "lint": "eslint \"**/*.js\"",
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
+    "pre-commit": "lint-staged",
+    "pre-push": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Murtuza-Ahmed/backend-template.git"
+  },
+  "keywords": [
+    "nodejs",
+    "express",
+    "rest-api",
+    "backend",
+    "template",
+    "starter"
+  ],
+  "type": "module",
+  "lint-staged": {
+    "*.js": [
+      "npm run lint -- --fix"
+    ]
+  },
+  "bugs": {
+    "url": "https://github.com/Murtuza-Ahmed/backend-template/issues"
+  },
+  "homepage": "https://github.com/Murtuza-Ahmed/backend-template#readme",
+  "imports": {
+    "#config/*": "./src/config/*.js",
+    "#constants/*": "./src/constants/*.js",
+    "#middlewares/*": "./src/middlewares/*.js",
+    "#models/*": "./src/models/*.js",
+    "#services/*": "./src/services/*.js",
+    "#utils/*": "./src/utils/*.js",
+    "#validations/*": "./src/validations/*.js",
+    "#controllers/*": "./src/controllers/*.js"
+  },
+  "engines": {
+    "node": ">=24"
+  }
+}
