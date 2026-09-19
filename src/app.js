@@ -4,6 +4,10 @@ import helmet from 'helmet';
 import env from './config/env.js';
 import { checkDatabaseConnection } from './config/database.js';
 import { httpLogger, logger } from './config/logger.js';
+import {
+  errorMiddleware,
+  notFoundHandler,
+} from './middlewares/error.middleware.js';
 
 const app = express();
 
@@ -11,6 +15,7 @@ app.use(helmet());
 app.use(
   cors({
     origin: env.CORS_ORIGIN === '*' ? true : env.CORS_ORIGIN,
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true,
   })
 );
@@ -56,12 +61,7 @@ app.get('/', (_req, res) => {
   });
 });
 
-app.use((req, res) => {
-  res.status(404).json({
-    success: false,
-    message: 'Route not found',
-    path: req.originalUrl,
-  });
-});
+app.use(notFoundHandler);
+app.use(errorMiddleware);
 
 export default app;

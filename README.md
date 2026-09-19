@@ -80,3 +80,31 @@ The API does not start when PostgreSQL is unavailable. Prisma Studio is availabl
 ```bash
 npm run prisma:studio
 ```
+
+## Error Handling
+
+The application uses a centralized error pipeline for controllers and services:
+
+- `ApiError` represents expected application errors with a status, code, and optional details.
+- `asyncHandler` forwards rejected async controller promises to Express error middleware.
+- The global error middleware maps `ApiError`, Zod validation errors, and common Prisma errors to safe responses.
+- `error-codes.js` contains reusable application-level error codes.
+
+Error responses use this format:
+
+```json
+{
+   "success": false,
+   "message": "Resource not found",
+   "code": "RESOURCE_NOT_FOUND",
+   "details": null
+}
+```
+
+For example, a controller can throw an application error without formatting the response itself:
+
+```js
+throw new ApiError(404, 'Resource not found', 'RESOURCE_NOT_FOUND');
+```
+
+In development, unexpected errors are logged with useful diagnostic information after sensitive values are redacted. In production, clients receive generic safe messages and never receive stack traces, credentials, database URLs, tokens, or other internal details.
