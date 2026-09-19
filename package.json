@@ -30,7 +30,7 @@
   "scripts": {
     "dev": "nodemon src/index.js",
     "start": "node src/index.js",
-    "test": "mocha --timeout=60000 --exit",
+    "test": "mocha \"tests/**/*.test.js\" --timeout=60000 --exit",
     "lint": "eslint .",
     "format": "prettier --write .",
     "prisma": "prisma",
